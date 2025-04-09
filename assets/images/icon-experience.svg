@@ -1,0 +1,14 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <!-- Briefcase base -->
+  <rect x="6" y="13" width="28" height="20" rx="2" ry="2" stroke="#FFDB6E" stroke-width="2" fill="none" />
+  
+  <!-- Briefcase top/handle -->
+  <path d="M15,13 V9 C15,7.9 15.9,7 17,7 H23,C24.1,7 25,7.9 25,9 V13" stroke="#FFDB6E" stroke-width="2" fill="none" />
+  
+  <!-- Clock face (representing time/experience) -->
+  <circle cx="20" cy="23" r="7" stroke="#FFDB6E" stroke-width="1.5" />
+  
+  <!-- Clock hands -->
+  <line x1="20" y1="23" x2="20" y2="18" stroke="#FFDB6E" stroke-width="1.5" stroke-linecap="round" />
+  <line x1="20" y1="23" x2="24" y2="25" stroke="#FFDB6E" stroke-width="1.5" stroke-linecap="round" />
+</svg>
