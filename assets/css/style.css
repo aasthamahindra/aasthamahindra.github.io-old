@@ -348,6 +348,16 @@ main {
 .avatar-box {
   background: var(--bg-gradient-onyx);
   border-radius: 20px;
+  max-width: 150px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.avatar-box img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
 }
 
 .info-content .name {
@@ -1409,8 +1419,12 @@ textarea.form-control::-webkit-resizer {
 
 }
 
-
-
+/* For mobile specifically */
+@media (max-width: 576px) {
+  .avatar-box {
+    max-width: 110px; /* Smaller on mobile devices */
+  }
+}
 
 
 /**
