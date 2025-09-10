@@ -543,7 +543,7 @@
 
           <div class="filter-select-box">
             <button class="filter-select" data-select>
-              <div class="select-value" data-selecct-value>Select category</div>
+              <div class="select-value" data-select-value>Select category</div>
               <div class="select-icon">
                 <ion-icon name="chevron-down"></ion-icon>
               </div>
@@ -578,9 +578,7 @@
                 <p class="project-category">Python</p>
               </a>
             </li>
-          </ul>
 
-          <ul class="project-list">
             <li class="project-item active" data-filter-item data-category="Javascript">
               <a href="https://github.com/aasthamahindra/boxfit.git" target="_blank">
                 <figure class="project-img">
@@ -821,119 +819,88 @@
       });
   </script>
 
-    <script>
-      function navigateTo(page) {
-        document.querySelectorAll('.main-content article').forEach(function (article) {
-          article.classList.remove('active');
-        });
+  <script>
+    function navigateTo(page) {
+      document.querySelectorAll('.main-content article').forEach(function (article) {
+        article.classList.remove('active');
+      });
 
-        // Add 'active' class to the selected article
-        document.querySelector(`[data-page="${page}"]`).classList.add('active');
+      // Add 'active' class to the selected article
+      document.querySelector(`[data-page="${page}"]`).classList.add('active');
 
-        // Update active navbar button
-        document.querySelectorAll('.navbar-link').forEach(function(navLink) {
-          navLink.classList.remove('active');
-        });
-        document.querySelector(`.navbar-link[onclick="navigateTo('${page}')"]`).classList.add('active');
+      // Update active navbar button
+      document.querySelectorAll('.navbar-link').forEach(function(navLink) {
+        navLink.classList.remove('active');
+      });
+      document.querySelector(`.navbar-link[onclick="navigateTo('${page}')"]`).classList.add('active');
 
-        // Save the current page to localStorage
-        localStorage.setItem('currentPage', page);
+      // Save the current page to localStorage
+      localStorage.setItem('currentPage', page);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Restore saved page
+      const savedPage = localStorage.getItem('currentPage');
+      if (savedPage) {
+        navigateTo(savedPage);
       }
 
-      // Add this code to your script.js file or inside a script tag at the bottom of your HTML
-      document.addEventListener('DOMContentLoaded', function() {
-        // Check if there's a saved page in localStorage
-        const savedPage = localStorage.getItem('currentPage');
+      const filterBtns = document.querySelectorAll('[data-filter-btn]');
+      const selectItems = document.querySelectorAll('[data-select-item]');
+      const projectItems = document.querySelectorAll('.project-item');
+      let emptyMessage = document.querySelector('.empty-message');
 
-        if (savedPage) {
-          // Navigate to the saved page
-          navigateTo(savedPage);
+      if (!emptyMessage) {
+        emptyMessage = document.createElement('div');
+        emptyMessage.className = 'empty-message';
+        emptyMessage.style.display = 'none';
+        emptyMessage.style.textAlign = 'center';
+        emptyMessage.style.padding = '30px';
+        emptyMessage.style.color = '#fff';
+        emptyMessage.style.fontSize = '18px';
+        emptyMessage.style.width = '100%';
+        emptyMessage.textContent = 'No Projects Available!';
+        const projectList = document.querySelector('.project-list');
+        if (projectList) {
+          projectList.parentNode.insertBefore(emptyMessage, projectList.nextSibling);
         }
+      }
 
-        // Add the empty projects message functionality
-        const filterBtns = document.querySelectorAll('[data-filter-btn]');
-        const projectItems = document.querySelectorAll('.project-item');
+      function applyFilter(filterValue) {
+        let visibleCount = 0;
 
-        // Create empty message element if it doesn't exist
-        let emptyMessage = document.querySelector('.empty-message');
-        if (!emptyMessage) {
-          emptyMessage = document.createElement('div');
-          emptyMessage.className = 'empty-message';
-          emptyMessage.style.display = 'none';
-          emptyMessage.style.textAlign = 'center';
-          emptyMessage.style.padding = '30px';
-          emptyMessage.style.color = '#fff';
-          emptyMessage.style.fontSize = '18px';
-          emptyMessage.style.width = '100%';
-          emptyMessage.textContent = 'No Projects Available!';
-
-          // Insert after project-list
-          const projectList = document.querySelector('.project-list');
-          if (projectList) {
-            projectList.parentNode.insertBefore(emptyMessage, projectList.nextSibling);
-          }
-        }
-
-        // Function to check if any projects are visible after filtering
-        function checkForVisibleProjects() {
-          const visibleProjects = document.querySelectorAll('.project-item.active');
-          if (visibleProjects.length === 0) {
-            emptyMessage.style.display = 'block';
+        projectItems.forEach(item => {
+          if (filterValue === 'All' || item.dataset.category === filterValue) {
+            item.style.display = 'block';
+            visibleCount++;
           } else {
-            emptyMessage.style.display = 'none';
+            item.style.display = 'none';
           }
-        }
-
-        // Add click event to each filter button
-        filterBtns.forEach(btn => {
-          btn.addEventListener('click', function() {
-            const filterValue = this.textContent.trim();
-
-            // Show/hide projects based on category
-            projectItems.forEach(item => {
-              if (filterValue === 'All') {
-                item.classList.add('active');
-              } else {
-                if (item.dataset.category === filterValue) {
-                  item.classList.add('active');
-                } else {
-                  item.classList.remove('active');
-                }
-              }
-            });
-
-            // Check if any projects are visible after filtering
-            checkForVisibleProjects();
-          });
         });
 
-        // Also apply to dropdown select if it's being used
-        const selectItems = document.querySelectorAll('[data-select-item]');
-        selectItems.forEach(item => {
-          item.addEventListener('click', function() {
-            const filterValue = this.textContent.trim();
+        emptyMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
 
-            // Same logic as above
-            projectItems.forEach(project => {
-              if (filterValue === 'All') {
-                project.classList.add('active');
-              } else {
-                if (project.dataset.category === filterValue) {
-                  project.classList.add('active');
-                } else {
-                  project.classList.remove('active');
-                }
-              }
-            });
-
-            checkForVisibleProjects();
-          });
+      // Buttons
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          applyFilter(this.textContent.trim());
         });
-
-        // Check on page load
-        checkForVisibleProjects();
       });
-    </script>
+
+      // Dropdown
+      selectItems.forEach(item => {
+        item.addEventListener('click', function() {
+          applyFilter(this.textContent.trim());
+        });
+      });
+
+      // Default: show all
+      applyFilter('All');
+    });
+  </script>
 
 </body>
 

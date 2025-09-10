@@ -557,7 +557,7 @@ main {
 
 
 /**
- * #service 
+ * #service
  */
 
 .service {
@@ -637,7 +637,7 @@ main {
 
 
 /**
- * #testimonials 
+ * #testimonials
  */
 
 .testimonials {
@@ -819,7 +819,7 @@ main {
 
 
 /**
- * #clients 
+ * #clients
  */
 
 .clients {
@@ -870,7 +870,7 @@ main {
 
 
 /**
- * education and experience 
+ * education and experience
  */
 
 .timeline {
@@ -939,7 +939,7 @@ main {
 
 
 /**
- * skills 
+ * skills
  */
 
 .skills-title {
@@ -1053,15 +1053,23 @@ main {
 }
 
 .project-list {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 30px;
-  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .project-item {
-  display: none;
+  flex: 1 1 calc(50% - 20px);
+  max-width: calc(50% - 20px);
+  align-items: flex-end;
+  background: #1e1e1e;
+  border-radius: 12px;
+  overflow: hidden;
 }
+
 
 .project-item.active {
   display: block;
@@ -1408,11 +1416,11 @@ textarea.form-control::-webkit-resizer {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .avatar-box {
     margin-bottom: 15px;
   }
-  
+
   .info-content {
     display: flex;
     flex-direction: column;
@@ -1434,7 +1442,7 @@ textarea.form-control::-webkit-resizer {
 
 
   /**
-   * #PORTFOLIO, BLOG 
+   * #PORTFOLIO, BLOG
    */
 
   .project-img,
@@ -1862,7 +1870,7 @@ textarea.form-control::-webkit-resizer {
     float: left;
     padding: 5px;
   }
-  
+
   .clearfix::after {
     content: "";
     clear: both;
@@ -1972,7 +1980,7 @@ textarea.form-control::-webkit-resizer {
 
 
   /**
-   * MAIN 
+   * MAIN
    */
 
   main {
